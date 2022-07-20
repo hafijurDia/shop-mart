@@ -22,12 +22,10 @@ class ChildcategoryController extends Controller
     		$data = DB::table('childcategories')->leftJoin('categories','childcategories.category_id','categories.id')->leftJoin('subcategories','childcategories.subcategory_id','subcategories.id')
     			->select('categories.category_name','subcategories.subcategory_name','childcategories.*')->get();
 
-
     			return DataTables::of($data)
     					->addIndexColumn()
     					->addColumn('action',function($row){
-
-    						$actionbtn = '<a href="#" class="btn btn-info btn-sm edit" data-id="'.$row->id.'" data-toggle="modal" data-target="#editModel"><i class="fas fa-edit"></i></a>
+    					$actionbtn = '<a href="#" class="btn btn-info btn-sm edit" data-id="'.$row->id.'" data-toggle="modal" data-target="#editModel"><i class="fas fa-edit"></i></a>
                     	<a href="'.route('childcategory.delete',[$row->id]).'" class="btn btn-danger btn-sm" id="delete"><i class="fas fa-trash"></i></a>';
 
                     	return $actionbtn;

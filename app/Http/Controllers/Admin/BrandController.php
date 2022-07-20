@@ -27,7 +27,6 @@ class BrandController extends Controller
     			return DataTables::of($data)
     					->addIndexColumn()
     					->addColumn('action',function($row){
-
     						$actionbtn = '<a href="#" class="btn btn-info btn-sm edit" data-id="'.$row->id.'" data-toggle="modal" data-target="#editModel"><i class="fas fa-edit"></i></a>
                     	<a href="'.route('brand.delete',[$row->id]).'" class="btn btn-danger btn-sm" id="delete"><i class="fas fa-trash"></i></a>';
 

@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Child Category</h1>
+            <h1 class="m-0">Warehouse</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -28,7 +28,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All Child-category list here</h3>
+                <h3 class="card-title">Warehoue List</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -36,9 +36,9 @@
                   <thead>
                   <tr>
                     <th>SL</th>
-                    <th>Child Category name</th>
-                    <th>Sub Category Name</th>
-                    <th>Category name</th>
+                    <th>Warehouse name</th>
+                    <th>Warehouse address</th>
+                    <th>Warehouse phone</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -65,39 +65,31 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Add New Child Category</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">Add New Warehouse</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
-	      <form action="{{route('childcategory.store')}}" method="Post" id="add-form">
+	      <form action="{{route('warehouse.store')}}" method="Post" id="add-form">
 	      @csrf
 	      <div class="modal-body">
 	       <div class="mb-3">
-			  <label for="exampleFormControlInput1" class="form-label">Category/Subcategory</label>
-			  <select class="form-control" name="subcategory_id" required="1">
-			  	@foreach($category as $row)
-			  	@php
-			  		$subcat = DB::table('subcategories')->where('category_id',$row->id)->get();
-			  	@endphp
-			  	<option disabled="">{{$row->category_name}}</option>
-			  	@foreach($subcat as $row)
-			  	<option value="{{$row->id}}">----{{$row->subcategory_name}}</option>
-			  	@endforeach
-			  	@endforeach
-			  </select>
-			  </select>
+			  <label  class="form-label">Warehouose Name</label>
+			  <input type="text" class="form-control" name="warehouse_name" placeholder="Warehouose Name" required="1">
+			  
 			</div>
 			<div class="mb-3">
-			  <label for="exampleFormControlInput1" class="form-label">Child Category Name</label>
-			  <input type="text" class="form-control" name="childcategory_name" placeholder="childcategory name" required="1">
-			  <small class="form-text text-muted">This is your main Child category</small>
+			  <label  class="form-label">Warehouose Address</label>
+			  <input type="text" class="form-control" name="warehouse_address" placeholder="Warehouose Address" >
+			</div>
+			<div class="mb-3">
+			  <label  class="form-label">Warehouose Phone</label>
+			  <input type="text" class="form-control" name="warehouse_phone" placeholder="Warehouose Phone" >
 			</div>
 		
 	      </div>
 	      <div class="modal-footer">
-	  
-	        <button type="submit" class="btn btn-primary"><span class="d-none">Loading.....</span>Submit</button>
+	        <button type="submit" class="btn btn-primary"><span class="d-none loader"><i class="fas fa-spinner"></i>Loading...</span><span class="submit_btn">Submit</span></button>
 	      </div>
 	      </form>
 	    </div>
@@ -109,7 +101,7 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Edit Child Category</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">Edit Warehouse</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -127,26 +119,31 @@
 			var table = $('.ytable').DataTable({
 				processing:true,
 				serverSide:true,
-				ajax:"{{route('childcategory.index')}}",
+				ajax:"{{route('warehouse.index')}}",
 				columns:[
 					{data:'DT_RowIndex',name:'DT_RowIndex'},
-					{data:'childcategory_name',name:'childcategory_name'},
-					{data:'subcategory_name',name:'subcategory_name'},
-					{data:'category_name',name:'category_name'},
+					{data:'warehouse_name',name:'warehouse_name'},
+					{data:'warehouse_address',name:'warehouse_address'},
+					{data:'warehouse_phone',name:'warehouse_phone'},
 					{data:'action',name:'action',orderable:true,searchable:true},
 
 				]
 			});
 		});
 
+		
+
 		$('body').on('click','.edit', function(){
-			let childcat_id = $(this).data('id');
+			let id = $(this).data('id');
 			
-			$.get("childcategory/edit/"+childcat_id,function(data){
+			$.get("warehouse/edit/"+id,function(data){
 				$('#modal_body').html(data);
 			});
+		});
 
-
+		$('#add-form').on('submit', function(){
+			$('.loader').removeClass('d-none');
+			$('.submit_btn').addClass('d-none');
 		});
 
 

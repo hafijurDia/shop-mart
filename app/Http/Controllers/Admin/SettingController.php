@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use DB;
 use Image;
 use File;
@@ -19,6 +20,7 @@ class SettingController extends Controller
     public function seo()
     {
     	$data = DB::table('seos')->first();
+	
     	return view('admin.setting.seo',compact('data'));
     }
 

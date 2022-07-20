@@ -141,7 +141,7 @@ Route::group(['namespace' =>'App\Http\Controllers\Admin','middleware'=>'is_admin
 			Route::post('/update/{id}' ,'PageController@update')->name('page.update');
 		});
 
-	});
+	}); 
 
 	
 
